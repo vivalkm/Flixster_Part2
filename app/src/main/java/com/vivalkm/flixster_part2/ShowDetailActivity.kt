@@ -7,10 +7,10 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 
-private const val TAG = "DetailActivity"
+private const val TAG = "ShowDetailActivity"
 private const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500/"
 
-class DetailActivity : AppCompatActivity() {
+class ShowDetailActivity : AppCompatActivity() {
     private lateinit var backdropImageView: ImageView
     private lateinit var nameTextView: TextView
     private lateinit var voteTextView: TextView

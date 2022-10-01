@@ -3,7 +3,6 @@ package com.vivalkm.flixster_part2
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.codepath.asynchttpclient.AsyncHttpClient
@@ -28,6 +27,7 @@ fun createJson() = Json {
 
 class MainActivity : AppCompatActivity() {
     private lateinit var popularShowRV: RecyclerView
+    private lateinit var popularMovieRv: RecyclerView
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,15 +37,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         popularShowRV = findViewById(R.id.popularShowRv)
+        popularMovieRv = findViewById(R.id.popularMovieRv)
 
-        // Set up ArticleAdapter with articles
+        // Set up ShowAdapter with shows
         val shows = mutableListOf<Show>()
         val showAdapter = ShowAdapter(this, shows)
         popularShowRV.adapter = showAdapter
-        popularShowRV.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false)
+        popularShowRV.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        val client = AsyncHttpClient()
-        client.get(SHOW_SEARCH_URL, object : JsonHttpResponseHandler() {
+        val clientShow = AsyncHttpClient()
+        clientShow.get(SHOW_SEARCH_URL, object : JsonHttpResponseHandler() {
             override fun onFailure(
                 statusCode: Int,
                 headers: Headers?,
@@ -56,16 +58,51 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onSuccess(statusCode: Int, headers: Headers, json: JSON) {
-                Log.i(TAG, "Successfully fetched articles: $json")
+                Log.i(TAG, "Successfully fetched shows: $json")
                 try {
                     val parsedJson = createJson().decodeFromString(
                         SearchShowsResponse.serializer(),
                         json.jsonObject.toString()
                     )
-                    parsedJson.results?.let {
-                            list -> shows.addAll(list)
+                    parsedJson.results?.let { list ->
+                        shows.addAll(list)
                     }
                     showAdapter.notifyDataSetChanged()
+                } catch (e: JSONException) {
+                    Log.e(TAG, "Exception: $e")
+                }
+            }
+        })
+
+        // Set up MovieAdapter with movies
+        val movies = mutableListOf<Movie>()
+        val movieAdapter = MovieAdapter(this, movies)
+        popularMovieRv.adapter = movieAdapter
+        popularMovieRv.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+        val clientMovie = AsyncHttpClient()
+        clientMovie.get(MOVIE_SEARCH_URL, object : JsonHttpResponseHandler() {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Headers?,
+                response: String?,
+                throwable: Throwable?
+            ) {
+                Log.e(TAG, "Failed to fetch movies: $statusCode")
+            }
+
+            override fun onSuccess(statusCode: Int, headers: Headers, json: JSON) {
+                Log.i(TAG, "Successfully fetched movies: $json")
+                try {
+                    val parsedJson = createJson().decodeFromString(
+                        SearchMoviesResponse.serializer(),
+                        json.jsonObject.toString()
+                    )
+                    parsedJson.results?.let { list ->
+                        movies.addAll(list)
+                    }
+                    movieAdapter.notifyDataSetChanged()
                 } catch (e: JSONException) {
                     Log.e(TAG, "Exception: $e")
                 }

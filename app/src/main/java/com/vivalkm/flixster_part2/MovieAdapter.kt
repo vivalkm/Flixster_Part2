@@ -10,24 +10,24 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-const val SHOW_EXTRA = "SHOW_EXTRA"
-private const val TAG = "ShowAdapter"
+const val MOVIE_EXTRA = "MOVIE_EXTRA"
+private const val TAG = "MovieAdapter"
 private const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500/"
 
-class ShowAdapter(private val context: Context, private val shows: MutableList<Show>) :
-    RecyclerView.Adapter<ShowAdapter.ViewHolder>() {
+class MovieAdapter(private val context: Context, private val movies: MutableList<Movie>) :
+    RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        // Get the individual show and bind to holder
-        val show = shows[position]
-        holder.bind(show)
+        // Get the individual movie and bind to holder
+        val movie = movies[position]
+        holder.bind(movie)
     }
 
-    override fun getItemCount() = shows.size
+    override fun getItemCount() = movies.size
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
@@ -40,22 +40,22 @@ class ShowAdapter(private val context: Context, private val shows: MutableList<S
         }
 
         // a helper method to help set up the onBindViewHolder method
-        fun bind(show: Show) {
-            nameTextView.text = show.name
+        fun bind(movie: Movie) {
+            nameTextView.text = movie.title
 
             Glide.with(context)
-                .load(IMAGE_BASE_URL + show.poster)
+                .load(IMAGE_BASE_URL + movie.poster)
                 .placeholder(R.drawable.loading)
                 .into(posterImageView)
         }
 
         override fun onClick(v: View?) {
-            // Get selected show
-            val show = shows[absoluteAdapterPosition]
+            // Get selected movie
+            val movie = movies[absoluteAdapterPosition]
 
-            // Navigate to Details screen and pass selected show
-            val intent = Intent(context, ShowDetailActivity::class.java)
-            intent.putExtra(SHOW_EXTRA, show)
+            // Navigate to Details screen and pass selected movie
+            val intent = Intent(context, MovieDetailActivity::class.java)
+            intent.putExtra(MOVIE_EXTRA, movie)
             context.startActivity(intent)
         }
     }
