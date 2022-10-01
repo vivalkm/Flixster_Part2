@@ -12,9 +12,12 @@
             android:id="@+id/showHeaderTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Most Popular TV Shows This Week"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Most Popular TV Shows This Week" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/popularShowRv"
@@ -22,16 +25,18 @@
             android:layout_height="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/showHeaderTextView"
-            app:layout_constraintVertical_weight="0.5" />
+            app:layout_constraintTop_toBottomOf="@+id/showHeaderTextView" />
 
         <TextView
             android:id="@+id/movieHeaderTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Most Popular Movies This Week"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/popularShowRv"
-            tools:text="Most Popular Movies This Week" />
+            app:layout_constraintTop_toBottomOf="@+id/popularShowRv" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/popularMovieRv"
@@ -40,7 +45,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movieHeaderTextView"
-            app:layout_constraintVertical_weight="0.5" />
+            app:layout_constraintTop_toBottomOf="@+id/movieHeaderTextView" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

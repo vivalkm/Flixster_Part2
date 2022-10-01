@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 
 private const val TAG = "DetailActivity"
+private const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500/"
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var backdropImageView: ImageView
@@ -35,7 +36,7 @@ class DetailActivity : AppCompatActivity() {
 
         // Load the media image
         Glide.with(this)
-            .load(show.backdrop)
+            .load(IMAGE_BASE_URL + show.backdrop)
             .into(backdropImageView)
 
         var btnBack = findViewById<Button>(R.id.btnBack)
