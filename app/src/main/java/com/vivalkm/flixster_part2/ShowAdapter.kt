@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 
 const val SHOW_EXTRA = "SHOW_EXTRA"
 private const val TAG = "ShowAdapter"
@@ -46,6 +47,7 @@ class ShowAdapter(private val context: Context, private val shows: MutableList<S
             Glide.with(context)
                 .load(IMAGE_BASE_URL + show.poster)
                 .placeholder(R.drawable.loading)
+                .transform(RoundedCorners(40))
                 .into(posterImageView)
         }
 
